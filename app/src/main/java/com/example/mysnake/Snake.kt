@@ -3,12 +3,12 @@ package com.example.mysnake
 object Snake{
 
     var SnakeMove:() -> Unit = {}
-    var isPlay = true;
+    var isPlay = true
 
     fun Start(){
         Thread(Runnable{
             while (true){
-                Thread.sleep(500)
+                Thread.sleep(250)
                 if(isPlay){
                     SnakeMove()
                 }

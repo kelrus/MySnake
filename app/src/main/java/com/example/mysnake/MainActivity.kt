@@ -4,19 +4,24 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.mysnake.Snake.Start
 import android.view.View
+import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
-import com.example.mysnake.Snake.SnakeMove
 import kotlinx.android.synthetic.main.activity_main.*
 import com.example.mysnake.Snake.isPlay
+import android.widget.FrameLayout
+
+const val HeadSize = 100
 
 class MainActivity : AppCompatActivity() {
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         val head = View(this)
-        head.layoutParams = LinearLayout.LayoutParams(100,100)
+        head.layoutParams = LinearLayout.LayoutParams(HeadSize,HeadSize)
         head.background = ContextCompat.getDrawable( this, R.drawable.circle)
         container.addView(head)
         Start();
@@ -31,15 +36,29 @@ class MainActivity : AppCompatActivity() {
 
     fun move(directions: Directions, head:View){
         when (directions) {
-            Directions.Up -> (head.layoutParams as LinearLayout.LayoutParams).topMargin -=100
-            Directions.Down ->(head.layoutParams as LinearLayout.LayoutParams).topMargin +=100
-            Directions.Left -> (head.layoutParams as LinearLayout.LayoutParams).leftMargin -=100
-            Directions.Right -> (head.layoutParams as LinearLayout.LayoutParams).leftMargin +=100
+            Directions.Up -> (head.layoutParams as FrameLayout.LayoutParams).topMargin -=HeadSize
+            Directions.Down ->(head.layoutParams as FrameLayout.LayoutParams).topMargin +=HeadSize
+            Directions.Left -> (head.layoutParams as FrameLayout.LayoutParams).leftMargin -=HeadSize
+            Directions.Right -> (head.layoutParams as FrameLayout.LayoutParams).leftMargin +=HeadSize
         }
         runOnUiThread {
+            GenerateFeed()
             container.removeView(head)
             container.addView(head)
         }
+    }
+
+    private fun GenerateFeed(){
+        Thread(Runnable {
+            val Feed = ImageView(this)
+            Feed.layoutParams = FrameLayout.LayoutParams(HeadSize,HeadSize)
+            Feed.setImageResource(R.drawable.ic_feed)
+            (Feed.layoutParams as FrameLayout.LayoutParams).topMargin = (1..10).random() * HeadSize
+            (Feed.layoutParams as FrameLayout.LayoutParams).leftMargin = (1..10).random() * HeadSize
+            runOnUiThread{
+                container.addView(Feed)
+            }
+        }).start()
     }
 }
 

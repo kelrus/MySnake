@@ -8,6 +8,7 @@ import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import com.example.mysnake.Snake.SnakeMove
 import kotlinx.android.synthetic.main.activity_main.*
+import com.example.mysnake.Snake.isPlay
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,6 +25,8 @@ class MainActivity : AppCompatActivity() {
         icArrowDown.setOnClickListener { Snake.SnakeMove = {move(Directions.Down, head)} }
         icArrowLeft.setOnClickListener { Snake.SnakeMove = {move(Directions.Left, head)} }
         icArrowRight.setOnClickListener { Snake.SnakeMove = {move(Directions.Right, head)} }
+        icPause.setOnClickListener { isPlay=false }
+        icPlay.setOnClickListener { isPlay=true }
     }
 
     fun move(directions: Directions, head:View){

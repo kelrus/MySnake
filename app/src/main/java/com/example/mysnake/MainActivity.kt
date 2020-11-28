@@ -8,7 +8,10 @@ import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.activity_main.*
 import com.example.mysnake.Snake
 import android.widget.FrameLayout
+import android.widget.LinearLayout
+import androidx.appcompat.app.AlertDialog
 
+const val Cells_Field = 10
 
 class MainActivity : AppCompatActivity() {
 
@@ -18,6 +21,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        container.layoutParams = LinearLayout.LayoutParams(Snake.HeadSize* Cells_Field,Snake.HeadSize* Cells_Field)
 
         Feed.layoutParams = FrameLayout.LayoutParams(Snake.HeadSize,Snake.HeadSize)
         Feed.background = ContextCompat.getDrawable( this, R.drawable.ic_feed)
@@ -53,6 +58,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         Snake.Start();
+        icPause.callOnClick()
         GenerateFeed();
     }
 
@@ -64,6 +70,11 @@ class MainActivity : AppCompatActivity() {
             Directions.Right -> (head.layoutParams as FrameLayout.LayoutParams).leftMargin +=Snake.HeadSize
         }
         runOnUiThread {
+            if(Snake.IsSnakeDead(head)){
+                icPause.callOnClick()
+                showEnd()
+                return@runOnUiThread
+            }
             moveBody(head.top,head.left)
             EatSnake()
             container.removeView(head)
@@ -89,9 +100,17 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun showEnd(){
+        AlertDialog.Builder(this)
+                .setTitle("You lose")
+                .setPositiveButton("Restart" ,{_,_ ->this.recreate()}).setCancelable(false)
+                                                                      .create()
+                                                                      .show()
+    }
+
     private fun GenerateFeed(){
-            (Feed.layoutParams as FrameLayout.LayoutParams).topMargin = (0..9).random() * Snake.HeadSize
-            (Feed.layoutParams as FrameLayout.LayoutParams).leftMargin = (0..9).random() * Snake.HeadSize
+            (Feed.layoutParams as FrameLayout.LayoutParams).topMargin = (0 until Cells_Field).random() * Snake.HeadSize
+            (Feed.layoutParams as FrameLayout.LayoutParams).leftMargin = (0 until Cells_Field).random() * Snake.HeadSize
             container.removeView(Feed)
             container.addView(Feed)
     }

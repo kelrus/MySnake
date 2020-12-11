@@ -1,4 +1,6 @@
 package com.example.mysnake
+import com.example.mysnake.MainActivity
+
 
 enum class PlayerInput {
     Up,
@@ -6,3 +8,5 @@ enum class PlayerInput {
     Left,
     Down
 }
+
+var currentInput = PlayerInput.Down

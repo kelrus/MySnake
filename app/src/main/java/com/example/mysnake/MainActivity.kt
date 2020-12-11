@@ -32,17 +32,18 @@ class MainActivity : AppCompatActivity() {
         head.setImageResource(R.drawable.snake_head)
         container.addView(head)
 
+        Snake.SnakeMove = {isCurrentInput(PlayerInput.Down,PlayerInput.Up)}
         icArrowUp.setOnClickListener {
-            Snake.SnakeMove = {MoveHead(PlayerInput.Up) }
+            Snake.SnakeMove = {isCurrentInput(PlayerInput.Up,PlayerInput.Down) }
         }
         icArrowDown.setOnClickListener {
-            Snake.SnakeMove = {MoveHead(PlayerInput.Down)}
+            Snake.SnakeMove = {isCurrentInput(PlayerInput.Down,PlayerInput.Up)}
         }
         icArrowLeft.setOnClickListener {
-            Snake.SnakeMove = {MoveHead(PlayerInput.Left)}
+            Snake.SnakeMove = {isCurrentInput(PlayerInput.Left,PlayerInput.Right)}
         }
         icArrowRight.setOnClickListener {
-            Snake.SnakeMove = {MoveHead(PlayerInput.Right)}
+            Snake.SnakeMove = {isCurrentInput(PlayerInput.Right,PlayerInput.Left)}
         }
         icPause.setOnClickListener {
             Snake.isPlay=false
@@ -58,12 +59,23 @@ class MainActivity : AppCompatActivity() {
         GenerateFeed();
     }
 
-    public fun MoveHead(playerInput: PlayerInput){
+    fun isCurrentInput(choose:PlayerInput, opposite: PlayerInput){
+        if (currentInput == opposite){
+            MoveHead(currentInput)
+        }
+        else{
+            currentInput=choose
+            MoveHead(choose)
+        }
+
+    }
+
+    fun MoveHead(playerInput: PlayerInput){
         when (playerInput) {
-            PlayerInput.Up -> (head.layoutParams as FrameLayout.LayoutParams).topMargin -=Snake.HeadSize
-            PlayerInput.Down ->(head.layoutParams as FrameLayout.LayoutParams).topMargin +=Snake.HeadSize
-            PlayerInput.Left -> (head.layoutParams as FrameLayout.LayoutParams).leftMargin -=Snake.HeadSize
-            PlayerInput.Right -> (head.layoutParams as FrameLayout.LayoutParams).leftMargin +=Snake.HeadSize
+            PlayerInput.Up -> RotateHead(PlayerInput.Up, 180f)
+            PlayerInput.Down ->RotateHead(PlayerInput.Down, 0f)
+            PlayerInput.Left ->RotateHead(PlayerInput.Left, 90f)
+            PlayerInput.Right ->RotateHead(PlayerInput.Right, 270f)
         }
         runOnUiThread {
             if(Snake.IsSnakeDead(head)){
@@ -75,6 +87,16 @@ class MainActivity : AppCompatActivity() {
             EatSnake()
             container.removeView(head)
             container.addView(head)
+        }
+    }
+
+    fun RotateHead(input: PlayerInput, rotate: Float){
+        head.rotation = rotate
+        when(input){
+            PlayerInput.Up -> (head.layoutParams as FrameLayout.LayoutParams).topMargin -=Snake.HeadSize
+            PlayerInput.Down ->(head.layoutParams as FrameLayout.LayoutParams).topMargin +=Snake.HeadSize
+            PlayerInput.Left -> (head.layoutParams as FrameLayout.LayoutParams).leftMargin -=Snake.HeadSize
+            PlayerInput.Right -> (head.layoutParams as FrameLayout.LayoutParams).leftMargin +=Snake.HeadSize
         }
     }
 

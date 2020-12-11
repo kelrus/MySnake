@@ -33,19 +33,19 @@ class MainActivity : AppCompatActivity() {
         container.addView(head)
 
         icArrowUp.setOnClickListener {
-            Snake.SnakeMove = {move(Directions.Up) }
+            Snake.SnakeMove = {move(PlayerInput.Up) }
             icChooseMove.layoutParams = icArrowUp.layoutParams
         }
         icArrowDown.setOnClickListener {
-            Snake.SnakeMove = {move(Directions.Down)}
+            Snake.SnakeMove = {move(PlayerInput.Down)}
             icChooseMove.layoutParams = icArrowDown.layoutParams
         }
         icArrowLeft.setOnClickListener {
-            Snake.SnakeMove = {move(Directions.Left)}
+            Snake.SnakeMove = {move(PlayerInput.Left)}
             icChooseMove.layoutParams = icArrowLeft.layoutParams
         }
         icArrowRight.setOnClickListener {
-            Snake.SnakeMove = {move(Directions.Right)}
+            Snake.SnakeMove = {move(PlayerInput.Right)}
             icChooseMove.layoutParams = icArrowRight.layoutParams
         }
         icPause.setOnClickListener {
@@ -62,12 +62,12 @@ class MainActivity : AppCompatActivity() {
         GenerateFeed();
     }
 
-    fun move(directions: Directions){
-        when (directions) {
-            Directions.Up -> (head.layoutParams as FrameLayout.LayoutParams).topMargin -=Snake.HeadSize
-            Directions.Down ->(head.layoutParams as FrameLayout.LayoutParams).topMargin +=Snake.HeadSize
-            Directions.Left -> (head.layoutParams as FrameLayout.LayoutParams).leftMargin -=Snake.HeadSize
-            Directions.Right -> (head.layoutParams as FrameLayout.LayoutParams).leftMargin +=Snake.HeadSize
+    fun move(playerInput: PlayerInput){
+        when (playerInput) {
+            PlayerInput.Up -> (head.layoutParams as FrameLayout.LayoutParams).topMargin -=Snake.HeadSize
+            PlayerInput.Down ->(head.layoutParams as FrameLayout.LayoutParams).topMargin +=Snake.HeadSize
+            PlayerInput.Left -> (head.layoutParams as FrameLayout.LayoutParams).leftMargin -=Snake.HeadSize
+            PlayerInput.Right -> (head.layoutParams as FrameLayout.LayoutParams).leftMargin +=Snake.HeadSize
         }
         runOnUiThread {
             if(Snake.IsSnakeDead(head)){
@@ -133,11 +133,4 @@ class MainActivity : AppCompatActivity() {
         container.addView(BodyImage)
         return BodyImage
     }
-}
-
-enum class Directions{
-    Up,
-    Right,
-    Left,
-    Down
 }

@@ -15,8 +15,8 @@ const val Cells_Field = 10
 
 class MainActivity : AppCompatActivity() {
 
-    val Feed by lazy { ImageView(this) }
-    val head by lazy { View(this)}
+    val feed by lazy { ImageView(this) }
+    val head by lazy { ImageView(this)}
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,29 +24,25 @@ class MainActivity : AppCompatActivity() {
 
         container.layoutParams = LinearLayout.LayoutParams(Snake.HeadSize* Cells_Field,Snake.HeadSize* Cells_Field)
 
-        Feed.layoutParams = FrameLayout.LayoutParams(Snake.HeadSize,Snake.HeadSize)
-        Feed.background = ContextCompat.getDrawable( this, R.drawable.ic_feed)
-        container.addView(Feed)
+        feed.layoutParams = FrameLayout.LayoutParams(Snake.HeadSize,Snake.HeadSize)
+        feed.setImageResource(R.drawable.feed)
+        container.addView(feed)
 
         head.layoutParams = FrameLayout.LayoutParams(Snake.HeadSize,Snake.HeadSize)
-        head.background = ContextCompat.getDrawable( this, R.drawable.circle)
+        head.setImageResource(R.drawable.snake_head)
         container.addView(head)
 
         icArrowUp.setOnClickListener {
-            Snake.SnakeMove = {move(PlayerInput.Up) }
-            icChooseMove.layoutParams = icArrowUp.layoutParams
+            Snake.SnakeMove = {MoveHead(PlayerInput.Up) }
         }
         icArrowDown.setOnClickListener {
-            Snake.SnakeMove = {move(PlayerInput.Down)}
-            icChooseMove.layoutParams = icArrowDown.layoutParams
+            Snake.SnakeMove = {MoveHead(PlayerInput.Down)}
         }
         icArrowLeft.setOnClickListener {
-            Snake.SnakeMove = {move(PlayerInput.Left)}
-            icChooseMove.layoutParams = icArrowLeft.layoutParams
+            Snake.SnakeMove = {MoveHead(PlayerInput.Left)}
         }
         icArrowRight.setOnClickListener {
-            Snake.SnakeMove = {move(PlayerInput.Right)}
-            icChooseMove.layoutParams = icArrowRight.layoutParams
+            Snake.SnakeMove = {MoveHead(PlayerInput.Right)}
         }
         icPause.setOnClickListener {
             Snake.isPlay=false
@@ -62,7 +58,7 @@ class MainActivity : AppCompatActivity() {
         GenerateFeed();
     }
 
-    fun move(playerInput: PlayerInput){
+    public fun MoveHead(playerInput: PlayerInput){
         when (playerInput) {
             PlayerInput.Up -> (head.layoutParams as FrameLayout.LayoutParams).topMargin -=Snake.HeadSize
             PlayerInput.Down ->(head.layoutParams as FrameLayout.LayoutParams).topMargin +=Snake.HeadSize
@@ -72,17 +68,17 @@ class MainActivity : AppCompatActivity() {
         runOnUiThread {
             if(Snake.IsSnakeDead(head)){
                 icPause.callOnClick()
-                showEnd()
+                ShowEnd()
                 return@runOnUiThread
             }
-            moveBody(head.top,head.left)
+            MoveBody(head.top,head.left)
             EatSnake()
             container.removeView(head)
             container.addView(head)
         }
     }
 
-    fun moveBody(headTop: Int, headLeft: Int){
+    fun MoveBody(headTop: Int, headLeft: Int){
        var prevBodyPart : PartOfBodySnake? = null
         for (i in 0 until Snake.bodySnake.size){
             val bodyPart = Snake.bodySnake[i]
@@ -100,7 +96,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun showEnd(){
+    private fun ShowEnd(){
         AlertDialog.Builder(this)
                 .setTitle("You lose")
                 .setPositiveButton("Restart" ,{_,_ ->this.recreate()}).setCancelable(false)
@@ -109,14 +105,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun GenerateFeed(){
-            (Feed.layoutParams as FrameLayout.LayoutParams).topMargin = (0 until Cells_Field).random() * Snake.HeadSize
-            (Feed.layoutParams as FrameLayout.LayoutParams).leftMargin = (0 until Cells_Field).random() * Snake.HeadSize
-            container.removeView(Feed)
-            container.addView(Feed)
+            (feed.layoutParams as FrameLayout.LayoutParams).topMargin = (0 until Cells_Field).random() * Snake.HeadSize
+            (feed.layoutParams as FrameLayout.LayoutParams).leftMargin = (0 until Cells_Field).random() * Snake.HeadSize
+            container.removeView(feed)
+            container.addView(feed)
     }
 
     private fun EatSnake(){
-        if(head.top==Feed.top && head.left==Feed.left)
+        if(head.top==feed.top && head.left==feed.left)
         {
             GenerateFeed()
             Snake.AddPartBodySnake(head.top, head.left,DrawPartOfBody(head.top,head.left))
@@ -125,7 +121,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun DrawPartOfBody(top:Int, left:Int):ImageView{
         val BodyImage = ImageView(this)
-        BodyImage.background = ContextCompat.getDrawable( this, R.drawable.circle)
+        BodyImage.setImageResource(R.drawable.snake_scale)
         BodyImage.layoutParams = FrameLayout.LayoutParams(Snake.HeadSize, Snake.HeadSize)
         (BodyImage.layoutParams as FrameLayout.LayoutParams).topMargin = top
         (BodyImage.layoutParams as FrameLayout.LayoutParams).leftMargin=left

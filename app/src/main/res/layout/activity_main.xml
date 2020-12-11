@@ -26,10 +26,11 @@
             android:layout_width="75dp"
             android:layout_height="75dp"
             android:layout_marginEnd="45dp"
-            android:src="@drawable/ic_arrow_up"
+            android:src="@drawable/arrow"
             app:layout_constraintBottom_toTopOf="@+id/Empty"
             app:layout_constraintEnd_toEndOf="@+id/Empty"
             app:layout_constraintHorizontal_bias="0.0"
+            android:rotation="90"
             app:layout_constraintStart_toStartOf="@+id/Empty" />
 
         <ImageView
@@ -51,22 +52,11 @@
             android:src="@drawable/ic_chooseplayer" />
 
         <ImageView
-            android:id="@+id/icChooseMove"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.5"
-            android:src="@drawable/ic_chooseplayer"/>
-
-        <ImageView
             android:id="@+id/icArrowRight"
             android:layout_width="75dp"
             android:layout_height="75dp"
-            android:rotation="90"
-            android:src="@drawable/ic_arrow_up"
+            android:rotation="180"
+            android:src="@drawable/arrow"
             app:layout_constraintBottom_toBottomOf="@+id/Empty"
             app:layout_constraintStart_toEndOf="@+id/Empty"
             app:layout_constraintTop_toTopOf="@+id/Empty" />
@@ -75,8 +65,7 @@
             android:id="@+id/icArrowLeft"
             android:layout_width="75dp"
             android:layout_height="75dp"
-            android:rotation="270"
-            android:src="@drawable/ic_arrow_up"
+            android:src="@drawable/arrow"
             app:layout_constraintBottom_toBottomOf="@+id/Empty"
             app:layout_constraintEnd_toStartOf="@+id/Empty"
             app:layout_constraintTop_toTopOf="@+id/Empty" />
@@ -85,8 +74,8 @@
             android:id="@+id/icArrowDown"
             android:layout_width="75dp"
             android:layout_height="75dp"
-            android:rotation="180"
-            android:src="@drawable/ic_arrow_up"
+            android:rotation="270"
+            android:src="@drawable/arrow"
             app:layout_constraintEnd_toEndOf="@+id/Empty"
             app:layout_constraintStart_toStartOf="@+id/Empty"
             app:layout_constraintTop_toBottomOf="@+id/Empty" />
@@ -97,7 +86,7 @@
             android:layout_height="75dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:src="@drawable/ic_play" />
+            android:src="@drawable/play_button" />
 
         <ImageView
             android:id="@+id/icPause"
@@ -105,7 +94,7 @@
             android:layout_height="75dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:src="@drawable/ic_pause" />
+            android:src="@drawable/pause" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>

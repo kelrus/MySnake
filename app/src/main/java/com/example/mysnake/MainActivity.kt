@@ -127,8 +127,21 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun GenerateFeed(){
-            (feed.layoutParams as FrameLayout.LayoutParams).topMargin = (0 until Cells_Field).random() * Snake.HeadSize
-            (feed.layoutParams as FrameLayout.LayoutParams).leftMargin = (0 until Cells_Field).random() * Snake.HeadSize
+            var isFeedCoordinateEqSnake = true
+            var feedTop = (0 until Cells_Field).random() * Snake.HeadSize
+            var feedLeft = (0 until Cells_Field).random() * Snake.HeadSize
+            while(isFeedCoordinateEqSnake){
+                isFeedCoordinateEqSnake = false
+                for (body in Snake.bodySnake){
+                    if(body.top == feedTop && body.left == feedLeft){
+                        isFeedCoordinateEqSnake = true
+                        feedTop = (0 until Cells_Field).random() * Snake.HeadSize
+                        feedLeft = (0 until Cells_Field).random() * Snake.HeadSize
+                    }
+                }
+            }
+            (feed.layoutParams as FrameLayout.LayoutParams).topMargin = feedTop
+            (feed.layoutParams as FrameLayout.LayoutParams).leftMargin = feedLeft
             container.removeView(feed)
             container.addView(feed)
     }

@@ -30,7 +30,7 @@
             app:layout_constraintBottom_toTopOf="@+id/Empty"
             app:layout_constraintEnd_toEndOf="@+id/Empty"
             app:layout_constraintHorizontal_bias="0.0"
-            android:rotation="90"
+            android:rotation="180"
             app:layout_constraintStart_toStartOf="@+id/Empty" />
 
         <ImageView
@@ -55,7 +55,7 @@
             android:id="@+id/icArrowRight"
             android:layout_width="75dp"
             android:layout_height="75dp"
-            android:rotation="180"
+            android:rotation="270"
             android:src="@drawable/arrow"
             app:layout_constraintBottom_toBottomOf="@+id/Empty"
             app:layout_constraintStart_toEndOf="@+id/Empty"
@@ -66,6 +66,7 @@
             android:layout_width="75dp"
             android:layout_height="75dp"
             android:src="@drawable/arrow"
+            android:rotation="90"
             app:layout_constraintBottom_toBottomOf="@+id/Empty"
             app:layout_constraintEnd_toStartOf="@+id/Empty"
             app:layout_constraintTop_toTopOf="@+id/Empty" />
@@ -74,7 +75,7 @@
             android:id="@+id/icArrowDown"
             android:layout_width="75dp"
             android:layout_height="75dp"
-            android:rotation="270"
+            android:rotation="0"
             android:src="@drawable/arrow"
             app:layout_constraintEnd_toEndOf="@+id/Empty"
             app:layout_constraintStart_toStartOf="@+id/Empty"
